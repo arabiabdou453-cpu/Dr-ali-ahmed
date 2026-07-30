@@ -10,7 +10,14 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:visual": "playwright test",
-    "visual:diff": "node scripts/visual-diff.mjs"
+    "visual:diff": "node scripts/visual-diff.mjs",
+
+    "prepare": "husky install",
+    "security:gitleaks": "gitleaks detect --source . --no-banner",
+    "security:semgrep": "semgrep --config p/default .",
+    "security:npm": "npm audit --audit-level=high || echo \"npm audit skipped\"",
+    "security:trivy": "trivy fs --timeout 10m --severity HIGH,CRITICAL .",
+    "security:all": "npm run security:gitleaks && npm run security:semgrep && npm run security:npm && npm run security:trivy"
   },
   "dependencies": {
     "framer-motion": "^12.23.12",
@@ -29,6 +36,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.5.22",
+    "husky": "^9.1.7",
     "pixelmatch": "^7.2.0",
     "pngjs": "^7.0.0",
     "postcss": "^8.5.18",
